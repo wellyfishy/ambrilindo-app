@@ -14,6 +14,9 @@ from pathlib import Path
 import os
 import socket
 
+import dj_database_url
+import django_on_heroku
+
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -72,6 +75,7 @@ CHANNEL_LAYERS = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -151,6 +155,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 NEDIA_ROOT = '/media/'
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticStorage'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
@@ -170,3 +176,4 @@ AUTHENTICATION_BACKENDS = [
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login'
+django_on_heroku.settings(locals())
