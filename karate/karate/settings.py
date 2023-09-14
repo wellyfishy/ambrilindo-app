@@ -37,7 +37,7 @@ hostname = socket.gethostname()
 local_ip = socket.gethostbyname(hostname)
 
 # Update the ALLOWED_HOSTS setting to include the local IP address
-ALLOWED_HOSTS = ['.vercel', local_ip, 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.vercel.app']
 
 # ALLOWED_HOSTS = [local_ip, 'localhost', '127.0.0.1', '192.168.244.91']
 
