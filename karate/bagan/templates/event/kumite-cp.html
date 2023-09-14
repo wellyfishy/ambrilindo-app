@@ -1,0 +1,611 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'kumite/css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Kumite Control Panel - Ambrilindo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: rgb(15, 15, 15);">
+
+<audio id="timerSound">
+    <source src="{% static 'audio/asdf.mp3' %}" type="audio/mpeg">
+</audio>
+<audio id="timerSound2">
+    <source src="{% static 'audio/asdf2.mp3' %}" type="audio/mpeg">
+</audio>
+
+    <!-- Atlet 1 -->
+    <div style="width: 100%; height: 50%; background: linear-gradient(90deg, #FF4949 -20%, rgba(217, 217, 217, 0) 100%); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25) inset">
+    <div>
+        <div style="display: flex; align-items: center; height: 100%;">
+            {% comment %} <img style="margin-top: 10px; margin-bottom: 10px" src="https://ifoxsoft.com/wp-content/uploads/2022/11/Logo-FORKI-PNG-%E2%80%93-IfoxSoft.Com_.webp" alt="Lamp" width="15%" height="100%"> {% endcomment %}
+            <img style="margin-top: 222px; margin-bottom: 10px; margin-left: 20px;position: absolute;" src="{% static 'bagan/img/bruh.png' %}" alt="Lamp" width="195px;" height="275px;">
+            <div style="display: inline-block; color: white; font-size: 75px; font-family: Khmer; font-weight: 400; word-wrap: break-word; font-family: Arial, Helvetica, sans-serif;">
+                <span id="peserta1_nama" style="margin-left: 300px;">AKA CONTESTANT</span>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%; height: 100%;">
+        <div class="container">
+            <div class="row" style="margin-left: 200px;">
+                <div class="col" id="aka1c">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">1C</h1>
+                </div>
+                <div class="col" id="aka2c">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">2C</h1>
+                </div>
+                <div class="col" id="aka3c">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">3C</h1>
+                </div>
+                <div class="col" id="akahc">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">HC</h1>
+                </div>
+                <div class="col" id="akah">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">H</h1>
+                </div>
+                <div class="col">
+                    <h1 style="text-align: center; margin: 0; margin-top: 30px;">
+                        <button id="akapenaltyplus" onclick="akapenaltyPlus()" style="background-color: gray;" class="btn ">
+                            <b>
+                                +
+                            </b>
+                        </button>
+                        <div style="display: inline-block;">
+                            <button id="akapenaltyminus" onclick="akapenaltyMinus()" style="background-color: gray;" class="btn ">
+                                <b>
+                                    - 
+                                </b>
+                            </button>
+                        </div>
+                    </h1>
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+                <div class="col" style="margin-top: 70px;">
+                    <button id="akasenshu" onclick="akaSenshu()" style="color: brown; text-shadow: 0 0 3px #ffffff;" class="btn btn-transparent">
+                        <b>
+                            Senshu
+                        </b>
+                    </button>
+                </div>
+                <div class="col" style="">
+                </div>
+                <div class="col" style="">
+                    <h1 id="aka_score" class="score" style="text-align: center; margin: 0; font-size: 130px; color: #FF4949; font-family: Arial Black,Arial Bold,Gadget,sans-serif;">0</h1>
+                </div>
+                <div class="col">
+                    <h1 style="text-align: center; margin: 0; margin-top: 30px; ">
+                        <button id="akascoreplus" onclick="akascorePlus()" style="background-color: gray;" class="btn ">
+                            <b>
+                                +
+                            </b>
+                        </button>
+                        <div style="display: inline-block;">
+                            <button id="akascoreminus" onclick="akascoreMinus()" style="background-color: gray;" class="btn ">
+                                <b>
+                                    - 
+                                </b>
+                            </button>
+                        </div>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        
+    </div>
+    
+    <div style="width: 100%; height: 50%; background: linear-gradient(90deg, #1F99FF -50%, rgba(217, 217, 217, 0) 100%); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25) inset">
+    <!-- Atlet 2 -->
+    <div>
+        <div style="display: flex; align-items: center; height: 100%;">
+            <img style="margin-top: 221px; margin-bottom: 10px; margin-left: 20px;position: absolute;" src="{% static 'bagan/img/bruh.png' %}" alt="Lamp" width="195px;" height="275px;">            
+            <div style="display: inline-block; color: white; font-size: 75px; font-family: Khmer; font-weight: 400; word-wrap: break-word; font-family: Arial, Helvetica, sans-serif;">
+                <span id="peserta1_nama" style="margin-left: 300px;">AO CONTESTANT</span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row" style="margin-left: 200px;">
+                <div class="col" id="ao1c">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">1C</h1>
+                </div>
+                <div class="col" id="ao2c">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">2C</h1>
+                </div>
+                <div class="col" id="ao3c">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">3C</h1>
+                </div>
+                <div class="col" id="aohc">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">HC</h1>
+                </div>
+                <div class="col" id="aoh">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">H</h1>
+                </div>
+                <div class="col">
+                    <h1 style="text-align: center; margin: 0; margin-top: 30px;">
+                        <button id="aopenaltyplus" onclick="aopenaltyPlus()" style="background-color: gray;" class="btn ">
+                            <b>
+                                +
+                            </b>
+                        </button>
+                        <div style="display: inline-block;">
+                            <button id="aopenaltyminus" onclick="aopenaltyMinus()" style="background-color: gray;" class="btn ">
+                                <b>
+                                    - 
+                                </b>
+                            </button>
+                        </div>
+                    </h1>
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                    <h1 style="text-align: center; margin: 0; margin-top: 50px; ">
+                        <button id="aosenshu" onclick="aoSenshu()" style="color: brown; text-shadow: 0 0 3px #ffffff;" class="btn btn-transparent">
+                            <b>
+                                Senshu
+                            </b>
+                        </button>
+                    </h1>
+                </div>
+                <div class="col" style="">
+                </div>
+                <div class="col">
+                    <h1 id="ao_score" class="score" style="text-align: center; margin: 0; font-size: 130px; color: #1F99FF; font-family: Arial Black,Arial Bold,Gadget,sans-serif;">0</h1>
+                </div>
+                <div class="col">
+                    <h1 style="text-align: center; margin: 0; margin-top: 30px; ">
+                        <button id="aoscoreplus" onclick="aoscorePlus()" style="background-color: gray;" class="btn ">
+                            <b>
+                                +
+                            </b>
+                        </button>
+                        <div style="display: inline-block;">
+                            <button id="aoscoreminus" onclick="aoscoreMinus()" style="background-color: gray;" class="btn ">
+                                <b>
+                                    - 
+                                </b>
+                            </button>
+                        </div>
+                    </h1>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+    <div style="background-color: #1a1a1a;">
+        <div class="container">
+            <div class="row">
+            <div class="col" style="margin-left: -90px; margin-top: 20px;">
+                <img style="width:400px;height:150px;" src="{% static 'bagan/img/logo.png' %}" alt="">
+            </div>
+            <div class="col">
+                <h1 class="score" style="text-align: left; margin-top: -15px; font-size: 150px; color: #e6fa78; font-family: Arial Black,Arial Bold,Gadget,sans-serif;">
+                    <span id="timer" class="time"><span id="minutes">01:00</span><span style="font-size: 40px;">.00</span>
+                </h1>
+            </div>
+            <div class="col" style="margin-top: 40px;">
+                <button id="increment" style="background-color: gray" class="btn ">
+                    <b>
+                        +
+                    </b>
+                </button>
+                <br>
+                <button style="margin-top: 10px; background-color: gray;" id="decrement" class="btn ">
+                    <b>
+                        - 
+                    </b>
+                </button>
+            </div>
+            <div class="col" style="margin-top: 50px;">
+                <select class="form-select form-select-lg" style="margin-bottom: -15px; width: 127.5px;"  id="timer_selector" type="select">
+                    <option value="60" selected>01:00</option>
+                    <option value="90">01:30</option>
+                    <option value="120">02:00</option>
+                    <option value="150">02:30</option>
+                    <option value="180">03:00</option>
+                    <option value="300">05:00</option>
+                </select>
+                <br>
+                <button id="start" onclick="startButton1()" class="btn btn-success" name="start">Start</button>
+                <button id="reset" class="btn btn-danger">Reset</button>
+                {% comment %} <button id="stop">Stop</button> {% endcomment %}
+            </div>
+            </div>
+        </div>
+    </div>
+    
+   <script>
+        let interval;
+        let countdownTime = 0;
+        let isRunning = false;
+        var timer_time = 60;
+        countdownTime = parseInt(timer_time || 0) * 1000;
+        
+        const timerElement = document.getElementById("timer");
+        const startButton = document.getElementById("start");
+        const resetButton = document.getElementById("reset");
+        const incrementButton = document.getElementById("increment");
+        const decrementButton = document.getElementById("decrement");
+        const defaultTimeInput = document.getElementById("defaultTime");
+        const timerSound = document.getElementById("timerSound");
+        const timerSound2 = document.getElementById("timerSound2")
+        let soundPlayed = false;
+        var startbutton_variable = false
+
+        function updateTimer() {
+            const minutes = Math.floor(countdownTime / 60000);
+            const seconds = Math.floor((countdownTime % 60000) / 1000);
+            const milliseconds = Math.floor(countdownTime % 1000 / 10); // Updated here
+
+            if (minutes < 1) {
+                if (seconds < 15) {
+                    timerElement.innerHTML = `<span style="text-shadow: 0 0 10px #FF0000; color: red;">${String(minutes).padStart(2, '0')}</span>` + `<span style="text-shadow: 0 0 10px #FF0000; color: red;">:</span>` + `<span style="text-shadow: 0 0 10px #FF0000; color: #FF0000;">${String(seconds).padStart(2, '0')}</span>` + `<span style="font-size: 40px; text-shadow: 0 0 3px #FF0000; color: red;">.</span>` + `<span style="text-shadow: 0 0 10px #FF0000; color: red; font-size: 40px;">${String(milliseconds).padStart(2, '0')}</span>`;
+                    if (!soundPlayed && seconds === 14) {
+                        timerSound2.play();
+                        soundPlayed = true;
+                    }
+                } else {
+                    timerElement.innerHTML = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}` + `<span style="font-size: 40px;">.${String(milliseconds).padStart(2, '0')}</span>`;
+                }
+            } else {
+                timerElement.innerHTML = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}` + `<span style="font-size: 40px;">.${String(milliseconds).padStart(2, '0')}</span>`;
+            }
+
+            if (minutes === 0) {
+                if (seconds === 0) {
+                    if (milliseconds === 0 ) {
+                        startButton1();
+                        timerElement.innerHTML = `<span style="text-shadow: 0 0 10px #FFFFFF; color: red;">00</span>` + `<span style="text-shadow: 0 0 10px #FFFFFF; color: red;">:</span>` + `<span style="text-shadow: 0 0 10px #FFFFFF; color: red;"></span><span style="text-shadow: 0 0 10px #FFFFFF; color: red;">00</span>` + `<span style="font-size: 40px; text-shadow: 0 0 3px #FFFFFF; color: red;">.</span>` + `<span style="text-shadow: 0 0 10px #FFFFFF; color: red; font-size: 40px;">00</span>`;
+                        soundPlayed = false;
+                        timerSound.play()
+                        setTimeout(function() {
+                            timerSound.play();
+                        }, 1500);
+                    }  
+                }
+            }
+        }
+
+        $('#timer_selector').on('change', function () {
+            timer_time = $(this).val();
+            if (timer_time === '0') {
+                timerElement.innerHTML = `<span>00</span>` + `<span>:</span>` + `<span"></span><span>00</span>` + `<span style="font-size: 40px;>.</span>` + `<span style="font-size: 40px;">00</span>`;
+            } else {
+                resetTimer()
+            }
+        })
+
+        function resetTimer() {
+            clearInterval(interval);
+            isRunning = false;
+            countdownTime = parseInt(timer_time || 0) * 1000;
+            startButton.name = 'start';
+            startButton.innerHTML = 'Start';
+            soundPlayed = false;
+            updateTimer();
+            startbutton_variable = true;
+            startButton1();
+        }
+
+        function startTimer() {
+            if (startButton.name === 'start') {
+                if (!isRunning) {
+                    interval = setInterval(() => {
+                        countdownTime -= 10;
+                        if (countdownTime <= 0) {
+                            clearInterval(interval);
+                            isRunning = false;
+                            updateTimer();
+                        } else {
+                            updateTimer();
+                        }
+                    }, 10);
+                    isRunning = true;
+                }
+                startButton.name = 'pause';
+                startButton.innerHTML = 'Pause';
+            } else {
+                clearInterval(interval);
+                isRunning = false;
+                startButton.name = 'start';
+                startButton.innerHTML = 'Start';
+            }
+            
+        }
+
+        function incrementSeconds() {
+            countdownTime += 1000;
+            updateTimer();
+        }
+
+        function decrementSeconds() {
+            countdownTime -= 1000;
+            updateTimer();
+        }
+
+
+        startButton.addEventListener("click", startTimer);
+        incrementButton.addEventListener("click", incrementSeconds);
+        decrementButton.addEventListener("click", decrementSeconds);
+        resetButton.addEventListener("click", resetTimer);
+
+        const aka1c = document.querySelector('#aka1c h1');
+        const aka2c = document.querySelector('#aka2c h1');
+        const aka3c = document.querySelector('#aka3c h1');
+        const akahc = document.querySelector('#akahc h1');
+        const akah = document.querySelector('#akah h1');
+        const aka_senshu = document.getElementById('akasenshu');
+        var aka_senshu_obj = false;
+        var aka_score = document.getElementById('aka_score');
+
+        let aka_penalty = 0;
+        var aka_scores = 0;
+
+        const ao1c = document.querySelector('#ao1c h1');
+        const ao2c = document.querySelector('#ao2c h1');
+        const ao3c = document.querySelector('#ao3c h1');
+        const aohc = document.querySelector('#aohc h1');
+        const aoh = document.querySelector('#aoh h1');
+        const ao_senshu = document.getElementById('aosenshu');
+        var ao_senshu_obj = false;
+        var ao_score = document.getElementById('ao_score');
+
+        let ao_penalty = 0;
+        var ao_scores = 0;
+
+        const akapenaltyplus = document.getElementById('akapenaltyplus');
+        const akapenaltyminus = document.getElementById('akapenaltyminus');
+        const akascoreplus = document.getElementById('akascoreplus');
+        const akascoreminus = document.getElementById('akascoreminus');
+        const aopenaltyplus = document.getElementById('aopenaltyplus');
+        const aopenaltyminus = document.getElementById('aopenaltyminus');
+        const aoscoreplus = document.getElementById('aoscoreplus');
+        const aoscoreminus = document.getElementById('aoscoreminus');
+
+        
+
+        function startButton1() {
+            if (startbutton_variable === false) {
+                akapenaltyplus.style.display = "none";
+                akapenaltyminus.style.display = "none";
+                akascoreplus.style.display = "none";
+                akascoreminus.style.display = "none";
+                aopenaltyplus.style.display = "none";
+                aopenaltyminus.style.display = "none";
+                aoscoreplus.style.display = "none";
+                aoscoreminus.style.display = "none";
+                startbutton_variable = true;
+            } else {
+                akapenaltyplus.style.display = "inline";
+                akapenaltyminus.style.display = "inline";
+                akascoreplus.style.display = "inline";
+                akascoreminus.style.display = "inline";
+                aopenaltyplus.style.display = "inline";
+                aopenaltyminus.style.display = "inline";
+                aoscoreplus.style.display = "inline";
+                aoscoreminus.style.display = "inline";
+                startbutton_variable = false;
+            }
+        }
+
+        function akapenaltyPlus() {
+            aka_penalty += 1;
+            console.log(aka_penalty)
+            if (aka_penalty === 1) {
+                aka1c.style.color = "black";
+                aka1c.style.backgroundColor = "yellow";
+                aka1c.style.borderRadius = "10px";
+            } else if (aka_penalty === 2) {
+                aka2c.style.color = "black";
+                aka2c.style.backgroundColor = "yellow";
+                aka2c.style.borderRadius = "10px";
+            } else if (aka_penalty === 3) {
+                aka3c.style.color = "black";
+                aka3c.style.backgroundColor = "yellow";
+                aka3c.style.borderRadius = "10px";
+            } else if (aka_penalty === 4) {
+                akahc.style.color = "black";
+                akahc.style.backgroundColor = "yellow";
+                akahc.style.borderRadius = "10px";
+            } else if (aka_penalty === 5) {
+                akah.style.color = "black";
+                akah.style.backgroundColor = "yellow";
+                akah.style.borderRadius = "10px";
+            }
+        }
+
+        function akapenaltyMinus() {
+            aka_penalty -= 1;
+            if (aka_penalty === 0) {
+                aka1c.style.color = "white";
+                aka1c.style.backgroundColor = "transparent";
+                aka1c.style.borderRadius = "10px";
+            } else if (aka_penalty === 1) {
+                aka2c.style.color = "white";
+                aka2c.style.backgroundColor = "transparent";
+                aka2c.style.borderRadius = "10px";
+            } else if (aka_penalty === 2) {
+                aka3c.style.color = "white";
+                aka3c.style.backgroundColor = "transparent";
+                aka3c.style.borderRadius = "10px";
+            } else if (aka_penalty === 3) {
+                akahc.style.color = "white";
+                akahc.style.backgroundColor = "transparent";
+                akahc.style.borderRadius = "10px";
+            } else if (aka_penalty === 4) {
+                akah.style.color = "white";
+                akah.style.backgroundColor = "transparent";
+                akah.style.borderRadius = "10px";
+            }
+        }
+
+        function akascorePlus() {
+            aka_scores += 1;
+            aka_score.textContent = aka_scores
+        }
+        function akascoreMinus() {
+            aka_scores -= 1;
+            aka_score.textContent = aka_scores
+        }
+
+        function aopenaltyPlus() {
+            ao_penalty += 1;
+            console.log(ao_penalty)
+            if (ao_penalty === 1) {
+                ao1c.style.color = "black";
+                ao1c.style.backgroundColor = "yellow";
+                ao1c.style.borderRadius = "10px";
+            } else if (ao_penalty === 2) {
+                ao2c.style.color = "black";
+                ao2c.style.backgroundColor = "yellow";
+                ao2c.style.borderRadius = "10px";
+            } else if (ao_penalty === 3) {
+                ao3c.style.color = "black";
+                ao3c.style.backgroundColor = "yellow";
+                ao3c.style.borderRadius = "10px";
+            } else if (ao_penalty === 4) {
+                aohc.style.color = "black";
+                aohc.style.backgroundColor = "yellow";
+                aohc.style.borderRadius = "10px";
+            } else if (ao_penalty === 5) {
+                aoh.style.color = "black";
+                aoh.style.backgroundColor = "yellow";
+                aoh.style.borderRadius = "10px";
+            }
+        }
+
+        function aopenaltyMinus() {
+            ao_penalty -= 1;
+            if (ao_penalty === 0) {
+                ao1c.style.color = "white";
+                ao1c.style.backgroundColor = "transparent";
+                ao1c.style.borderRadius = "10px";
+            } else if (ao_penalty === 1) {
+                ao2c.style.color = "white";
+                ao2c.style.backgroundColor = "transparent";
+                ao2c.style.borderRadius = "10px";
+            } else if (ao_penalty === 2) {
+                ao3c.style.color = "white";
+                ao3c.style.backgroundColor = "transparent";
+                ao3c.style.borderRadius = "10px";
+            } else if (ao_penalty === 3) {
+                aohc.style.color = "white";
+                aohc.style.backgroundColor = "transparent";
+                aohc.style.borderRadius = "10px";
+            } else if (ao_penalty === 4) {
+                aoh.style.color = "white";
+                aoh.style.backgroundColor = "transparent";
+                aoh.style.borderRadius = "10px";
+            }
+        }
+
+        function aoscorePlus() {
+            ao_scores += 1;
+            ao_score.textContent = ao_scores
+        }
+        function aoscoreMinus() {
+            ao_scores -= 1;
+            ao_score.textContent = ao_scores
+        }
+
+        function akaSenshu() {
+            if (aka_senshu_obj === false) {
+                aka_senshu.style.backgroundColor = "yellow";
+                aka_senshu.style.color = "black";
+                aka_senshu.innerHTML = `<b>Senshu</b>`;
+                aka_senshu_obj = true;
+            } else {
+                aka_senshu.style.backgroundColor = "transparent";
+                aka_senshu.style.color = "brown";
+                aka_senshu.innerHTML = `<b>Senshu</b>`;
+                aka_senshu_obj = false;
+            }
+        }
+        function aoSenshu() {
+            if (ao_senshu_obj === false) {
+                ao_senshu.style.backgroundColor = "yellow";
+                ao_senshu.style.color = "black";
+                ao_senshu.innerHTML = `<b>Senshu</b>`;
+                ao_senshu_obj = true;
+            } else {
+                ao_senshu.style.backgroundColor = "transparent";
+                ao_senshu.style.color = "brown";
+                ao_senshu.innerHTML = `<b>Senshu</b>`;
+                ao_senshu_obj = false;
+            }
+        }
+
+        $('#reset').on('click', function(){
+            aka_penalty = 0;
+            aka_scores = 0;
+            ao_penalty = 0;
+            ao_scores = 0;
+            
+            aka1c.style.color = "white";
+            aka1c.style.backgroundColor = "transparent";
+            aka1c.style.borderRadius = "10px";
+            aka2c.style.color = "white";
+            aka2c.style.backgroundColor = "transparent";
+            aka2c.style.borderRadius = "10px";
+            aka3c.style.color = "white";
+            aka3c.style.backgroundColor = "transparent";
+            aka3c.style.borderRadius = "10px";
+            akahc.style.color = "white";
+            akahc.style.backgroundColor = "transparent";
+            akahc.style.borderRadius = "10px";
+            akah.style.color = "white";
+            akah.style.backgroundColor = "transparent";
+            akah.style.borderRadius = "10px";
+            aka_score.textContent = 0;
+            aka_senshu.style.backgroundColor = "transparent";
+            aka_senshu.style.color = "brown"
+
+            ao1c.style.color = "white";
+            ao1c.style.backgroundColor = "transparent";
+            ao1c.style.borderRadius = "10px";
+            ao2c.style.color = "white";
+            ao2c.style.backgroundColor = "transparent";
+            ao2c.style.borderRadius = "10px";
+            ao3c.style.color = "white";
+            ao3c.style.backgroundColor = "transparent";
+            ao3c.style.borderRadius = "10px";
+            aohc.style.color = "white";
+            aohc.style.backgroundColor = "transparent";
+            aohc.style.borderRadius = "10px";
+            aoh.style.color = "white";
+            aoh.style.backgroundColor = "transparent";
+            aoh.style.borderRadius = "10px";
+            ao_score.textContent = 0;
+            ao_senshu.style.backgroundColor = "transparent";
+            ao_senshu.style.color = "brown"
+
+            // timer_countdown.innerHTML = `<span">00</span>` + `<span">:</span>` + `<span">00</span>` + `<span style="font-size: 40px;">.</span>` + `<span style="font-size: 40px;">00</span>`;
+
+            
+            // var temp="0"; 
+            // $("#timer_selector").val(temp);
+            
+        });
+    </script>
+    <script>
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+</body>
+</html>

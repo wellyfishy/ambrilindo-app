@@ -1,0 +1,47 @@
+{% extends 'event/eventbase.html' %} {% load static %}
+
+{% block title %}
+    {{ event.judul_event }} | Kata
+{% endblock %}
+
+{% block content %}
+    <h1 class="h3 mb-3"><strong>Dashboard Kata</strong> {{ event.judul_event }}</h1>
+    <div class="row">
+		<div class="d-flex order-1 order-xxl-1">
+			<div class="card flex-fill">
+				<div class="card-header">
+					<h5 class="card-title mb-0">Semua Bagan <b>Kata</b></h5>
+				</div>
+				<table class="table table-hover my-0">
+					<thead>
+						<tr>
+							<th>Judul</th>
+							<th class="d-none d-xl-table-cell">Jenis</th>
+							<th class="d-none d-xl-table-cell">-</th>
+							<th>Status</th>
+							<th class="d-none d-md-table-cell" style="">MISC</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for kata in kata %}
+						<tr>
+							<td>{{ kata.judul_bagan }}</td>
+							<td class="d-none d-xl-table-cell">{{ kata.get_grup_kata_display }}</td>
+							<td class="d-none d-xl-table-cell">-</td>
+							<td>
+                                <span class="badge {% if kata.status == 'S' %}bg-success{% else %}bg-danger{% endif %}">{{ kata.get_status_display }}</span>
+                            </td>
+							<td>
+								<div >
+									<button class="btn btn-primary btn-sm" style=""><i class="align-middle" data-feather="edit"></i></button>
+									<button class="btn btn-danger btn-sm" style=""><i class="align-middle" data-feather="trash-2"></i></button>
+								</div>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+    </div>
+{% endblock %}

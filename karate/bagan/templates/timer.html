@@ -1,0 +1,50 @@
+<!-- timer_app/templates/timer.html -->
+<p id="timerStatus"></p>
+<p>Countup: <span id="minutes">00</span>:<span id="seconds">00</span></p>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+   $(document).ready(function() {
+       var minutesLabel = $("#minutes");
+       var secondsLabel = $("#seconds");
+       var totalSeconds = 0;
+       var isTimerRunning = true;  // Variable to track the timer running state
+
+       // Function to update the timer status using AJAX
+       function updateTimerStatus() {
+           $.ajax({
+               url: "/timer_status/",
+               method: "GET",
+               success: function(data) {
+                   isTimerRunning = (data.timer_status === "Running");
+               }
+           });
+       }
+
+       // Function to update the countup timer display
+       function updateCountupTimer() {
+           if (isTimerRunning) {
+               totalSeconds++;
+               var minutes = Math.floor(totalSeconds / 60);
+               var seconds = totalSeconds % 60;
+               minutesLabel.text(pad(minutes));
+               secondsLabel.text(pad(seconds));
+           }
+       }
+
+       // Call the updateTimerStatus function every 1 second
+       setInterval(updateTimerStatus, 1000);
+
+       // Call the updateCountupTimer function every 1 second
+       setInterval(updateCountupTimer, 1000);
+   });
+
+   function pad(val) {
+       var valString = val.toString();
+       if (valString.length < 2) {
+           return "0" + valString;
+       } else {
+           return valString;
+       }
+   }
+</script>

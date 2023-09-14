@@ -1,0 +1,32 @@
+<!-- timer_app/templates/control_panel.html -->
+<button id="startButton">Start Timer</button>
+<button id="pauseButton">Pause Timer</button>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+   $(document).ready(function() {
+       var csrftoken = $('[name=csrfmiddlewaretoken]').val();  // Fetch the CSRF token
+
+       $("#startButton").click(function() {
+           $.ajax({
+               url: "/start_timer/",
+               method: "POST",
+               headers: { "X-CSRFToken": csrftoken },  // Pass the CSRF token in the headers
+               success: function(data) {
+                   console.log("Timer started successfully");
+               }
+           });
+       });
+
+       $("#pauseButton").click(function() {
+           $.ajax({
+               url: "/pause_timer/",
+               method: "POST",
+               headers: { "X-CSRFToken": csrftoken },  // Pass the CSRF token in the headers
+               success: function(data) {
+                   console.log("Timer paused successfully");
+               }
+           });
+       });
+   });
+</script>

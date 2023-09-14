@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% load static %}
+
+{% block title %}
+    Kelola Event
+{% endblock %}
+
+{% block content %}
+<main id="main" class="main-page">
+
+    <!--==========================
+      Hotels Section
+    ============================-->
+    <section id="hotels" class="wow fadeIn">
+
+        <div class="container">
+            <div class="section-header">
+                <h2>EVENT ORGANIZER</h2>
+                {% comment %} <p>Her are some nearby hotels</p> {% endcomment %}
+            </div>
+
+            <button style="text-align: center;" type="button" class="btn btn-danger mb-4">+ Buat Event</button>
+
+            <div class="row">
+
+                {% for event in event %}
+                <div class="col-lg-3 col-md-3">
+                    <div class="hotel">
+                        <div class="hotel-img">
+                        <img src="{{ event.foto_event.url }}" class="img-fluid">
+                        </div>
+                        <h3>
+                            <a href="{% url 'keldetail' slug=event.slug %}">{{ event.judul_event }}</a>
+                        </h3>
+                        <p>{{ event.tanggal_tanding|date:"d/m/Y" }} - {{ event.tanggal_selesai|date:"d/m/Y"  }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+    
+            </div>
+        </div>
+  
+      </section>
+    </main>
+{% endblock %}

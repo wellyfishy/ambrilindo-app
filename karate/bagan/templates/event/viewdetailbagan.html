@@ -1,0 +1,149 @@
+{% extends 'event/eventbase.html' %}
+
+{% block title %}
+    {{ event.judul_event }} | Tambah Bagan {{ kategori.judul_kategori }} | Ambrilindo
+{% endblock %}
+
+{% block content %}
+    {% url 'keldetailkategori' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' as putra_url %}
+    {% url 'keldetailkategori' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putri' as putri_url %}
+    <h1 class="h3 mb-3"><strong>Tambah Bagan</strong> {{ event.judul_event }}/Kata/{{ kategori.judul_kategori }}
+        {% if putra_url in request.path %}
+          (Putra)
+        {% elif putri_url in request.path %}
+          (Putri)
+        {% endif %}
+        {% if internal %}
+          (Internal)
+        {% elif external %}
+          (External)
+        {% endif %}
+        
+    </h1>
+    
+    <section id="bracket">
+        <div class="container">
+            <div class="split split-one">
+                <!-- This is round one -->
+                <div class="round round-one current">
+                    <div class="round-details"><br/><span class="date"></span></div>
+                    {% for detail_bagan in detail_bagan %}
+                    {% comment %} {% url 'controlpanel1' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putri' bagan_pk=bagan.pk detailbagan_pk=detail_bagan.pk %} {% endcomment %}
+                        {% if detail_bagan.round == 1 %}
+                            <ul class="matchup">
+                                <li class="team team-top top">
+                                    {% if detail_bagan.id_atlet.count == 1 %}
+                                        {{ detail_bagan.id_atlet.first }}
+                                    {% else %}
+                                        {{ detail_bagan.id_atlet.first }}
+                                    {% endif %}
+                                    <span class="score">00.00</span>
+                                </li>
+                                <li class="team team-bottom bottom">
+                                    {% if detail_bagan.id_atlet.count == 1 %}
+                                        -
+                                    {% else %}
+                                        {{ detail_bagan.id_atlet.last }}
+                                    {% endif %}
+                                    <span class="score">00.00</span>
+                                </li>
+                            </ul>
+                            {% if not detail_bagan.dinilai %}
+                                <button class="btn dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: black; color: white; height: -10px">
+                                    Control Panel
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    {% for tatami in tatami %}
+                                            <button class="dropdown-item" onclick="openNewTab1('{{ detail_bagan.pk }}')" 
+                                            {% if putra_url in request.path %}
+                                                data-url="{% url 'controlpanel1' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' bagan_pk=bagan.pk detailbagan_pk=detail_bagan.pk tatami_pk=tatami.pk %}"
+                                            {% elif putri_url in request.path %}
+                                                data-url="{% url 'controlpanel1' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putri' bagan_pk=bagan.pk detailbagan_pk=detail_bagan.pk tatami_pk=tatami.pk %}"
+                                            {% endif %}
+                                                >
+                                                Tatami {{ forloop.counter }}
+                                            </button>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <button class="btn btn-primary" aria-haspopup="true" aria-expanded="false">
+                                    Telah Dinilai
+                                    <i class="align-middle me-2" data-feather="check"></i>
+                                </button>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <!-- This is round two -->
+                <div class="round round-two current">
+                    <div class="round-details"><br/><span class="date"></span></div>
+                    {% for detail_bagan in detail_bagan %}
+                        {% if detail_bagan.round == 2 %}
+                            <ul class="matchup">
+                                <li class="team team-top">
+                                    {% if detail_bagan.id_atlet.count == 1 %}
+                                        {{ detail_bagan.id_atlet.first }}
+                                    {% else %}
+                                        {{ detail_bagan.id_atlet.first }}
+                                    {% endif %}
+                                    <span class="score">00.00</span>
+                                </li>
+                                <li class="team team-bottom">
+                                    {% if detail_bagan.id_atlet.count == 1 %}
+                                        -
+                                    {% else %}
+                                        {{ detail_bagan.id_atlet.last }}
+                                    {% endif %}
+                                    <span class="score">00.00</span>
+                                </li>
+                            </ul>
+                            <button onclick="openNewTab()" class="btn" style="background-color: black; color: white; height: -10px">Scoring Board</button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </section>
+        {% if putra_url in request.path and kategori.judul_kategori == kategori.judul_kategori %}
+        <a href="{% url 'keldetailkategori' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' %}">
+          <button class="btn btn-danger" style="margin-top: 10px">
+            <i class="align-middle me-2" data-feather="arrow-left"></i>Kembali
+          </button>
+        </a>
+        {% elif putri_url in request.path and kategori.judul_kategori == kategori.judul_kategori %}
+        <a href="{% url 'keldetailkategori' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putri' %}">
+          <button class="btn btn-danger" style="margin-top: 10px">
+            <i class="align-middle me-2" data-feather="arrow-left"></i>Kembali
+          </button>
+        </a>
+        {% endif %}
+
+
+        <script>
+            function openNewTab1(detail_bagan_pk) {
+                var button = event.target;
+                var url = button.getAttribute('data-url');
+                url = url.replace('detailbagan_pk', detail_bagan_pk);
+                window.open(url, "_blank");
+            }
+        </script>
+
+        <script>
+            function openNewTab1(detail_bagan_pk) {
+                var button = event.target;
+                var url = button.getAttribute('data-url');
+                url = url.replace('detailbagan_pk', detail_bagan_pk);
+                window.open(url, "_blank");
+            }
+        </script>
+
+        {% comment %} <script>
+            function openNewTab() {
+                var url = 
+                window.open("{% url 'keldetailatlet' slug=event_slug %}");
+            }
+        </script> {% endcomment %}
+            
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'event/eventbase.html' %} {% load static %}
+
+{% block title %}
+    Tatami
+{% endblock title %}
+
+{% block content %}
+<h1 class="h3 mb-3"><strong>Dashboard {{ tatami }}</strong> {{ event.judul_event }}</h1>
+<br>
+    <div class="row">
+        <div class="d-flex order-1 order-xxl-1">
+            <div class="card flex-fill">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">List <b>Nomor Tanding</b> di <b>{{ tatami }}</b></h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover my-0">
+                        <thead>
+                            <tr>
+                                <th class="d-none d-xl-table-cell">No</th>
+                                <th>Nama</th>
+                                <th>MISC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bagan_kategori_tatami in bagan_kategori_tatami %}
+                            <tr>
+                                <td class="d-none d-xl-table-cell"><b>{{ forloop.counter }}</b></td>
+                                <td><b>{{ bagan_kategori_tatami }}</b></td>
+                                <td>
+                                    <div style="display: inline-block;">
+                                    <a href="#">
+                                        <button class="btn btn-primary btn-sm" style="">
+                                            <i class="align-middle" data-feather="edit"></i>
+                                            
+                                        </button>
+                                    </a>
+                                    </div>
+                                    <div style="display: inline-block;">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <input name="bagan_kategori_pk" type="hidden" value="{{ bagan_kategori_tatami.pk }}">
+                                            <button name="submit_button" value="hapus_bagan_kategori" type="submit" class="btn btn-danger btn-sm">
+                                                <i style="margin-top: -3;" data-feather="trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <select class="form-select mb-3" name="data">
+                                <option value="-" selected>Pilih untuk menambahkan nomor tanding</option>
+                                {% for bagan_kategori_choice in bagan_kategori_choices %}
+                                <option value="{{ bagan_kategori_choice.pk }}">{{ bagan_kategori_choice }}</option>
+                                {% endfor %}
+                            </select>
+                            <a class="btn btn-danger" href="{% url 'keldetailtatami' slug=event.slug %}">
+                                <i style="margin-top: -3;" data-feather="arrow-left"></i>
+                                Kembali
+                            </a>
+                            <button class="btn btn-primary">
+                                <i style="margin-top: -3;" data-feather="plus"></i>
+                                Tambah
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

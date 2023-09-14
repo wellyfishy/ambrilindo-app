@@ -1,0 +1,212 @@
+{% extends 'event/eventbase.html' %} {% load custom_tags %}
+
+{% block title %}
+    {{ event.judul_event }} | Detail Bagan {{ kategori.judul_kategori }} | Ambrilindo
+{% endblock %}
+
+{% block content %}
+    {% url 'keldetailkategori' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' as putra_url %}
+    {% url 'keldetailkategori' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putri' as putri_url %}
+    <h1 class="h3 mb-3"><strong>Detail Bagan</strong> {{ event.judul_event }}/Kata/{{ kategori.judul_kategori }}
+        {% if putra_url in request.path %}
+          (Putra)
+        {% elif putri_url in request.path %}
+          (Putri)
+        {% endif %}
+        {% if internal %}
+          (Internal)
+        {% elif external %}
+          (External)
+        {% endif %}
+        
+    </h1>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if bagan.tipe %}
+
+    <div class="row">
+        {% for group, datas_in_the_current_group in grouped_data.items %}
+		<div class="d-flex order-1 order-xxl-1" style="height: 400px; overflow-y: auto;">
+			<div class="card flex-fill">
+				<div class="card-header">
+					<h5 class="card-title mb-0">Daftar <b>Atlet</b> Grup <b>{{ group }}</b></h5>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+								<th class="d-none d-xl-table-cell">No</th>
+								<th>Nama</th>
+								<th>Kata</th>
+								<th>Perguruan</th>
+								<th>Perwakilan</th>
+								<th>Total Nilai</th>
+                                {% if not detail_bagan.dinilai %}
+                                <th>Penilaian</th>
+                                {% endif %}
+							</tr>
+						</thead>
+						<tbody>
+                            {% for detailbagan in datas_in_the_current_group %}
+							<tr>
+								<td class="d-none d-xl-table-cell">{{ forloop.counter }}</td>
+								<td>
+                                    {% if group in set1 %}
+                                    <b style="color: red;">{{ detailbagan.id_atlet.first }}</b>
+                                    {% elif group in set2 %}
+                                    <b style="color: blue;">{{ detailbagan.id_atlet.first }}</b>
+                                    {% endif %}
+                                </td>
+                                {% if detailbagan.kata1 %}
+								<td>{{ detailbagan.kata1 }}</td>
+                                {% else %}
+                                <td>-</td>
+                                {% endif %}
+								<td>{{ detailbagan.id_atlet.first.perguruan }}</td>
+								<td>{{ detailbagan.id_atlet.first.perwakilan }}</td>
+                                <td>
+                                    <b style="font-size: 30px;">
+                                {% if detailbagan.id_score.first.id_totalscore.first.total %}
+								    <span class="badge bg-dark">{{ detailbagan.id_score.first.id_totalscore.first.total }}</td>
+                                {% else %}
+                                    <span class="badge bg-dark">00.0
+                                {% endif %}
+                                </td>
+                                {% if not detailbagan.dinilai %}
+                                    </b>
+                                <td>
+                                    <div>
+                                        {% if admintatami %}
+                                            {% if putra_url in request.path and kategori.judul_kategori == kategori.judul_kategori %}
+                                            <a href="{% url 'controlpanel1' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' bagan_pk=bagan.pk detailbagan_pk=detailbagan.pk tatami_pk=admintatami.pk %}">
+                                            {% elif putri_url in request.path and kategori.judul_kategori == kategori.judul_kategori %}
+                                            <a href="{% url 'controlpanel1' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putri' bagan_pk=bagan.pk detailbagan_pk=detailbagan.pk tatami_pk=admintatami.pk %}">
+                                            {% endif %}
+                                            
+                                            {% if detailbagan.id_tatami %}
+                                            <span class="badge bg-warning">
+                                                Sedang Dinilai
+                                            </span>
+                                            {% else %}
+                                            <button class="btn btn-primary" style="margin-top: 5px;"><i class="align-middle" data-feather="edit"></i> 
+                                                Nilai
+                                            </button>
+                                            {% endif %}
+                                            
+                                        </a>
+                                        {% else %}
+                                            
+                                        {% endif %}
+									</div>
+                                </td>
+                                {% else %}
+                                <td>
+                                {% if putra_url in request.path and kategori.judul_kategori == kategori.judul_kategori %}
+                                <a href="{% url 'lihatscore1' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' bagan_pk=bagan.pk detailbagan_pk=detailbagan.pk tatami_pk=admintatami.pk %}">
+                                {% elif putri_url in request.path and kategori.judul_kategori == kategori.judul_kategori %}
+                                <a href="{% url 'lihatscore1' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putri' bagan_pk=bagan.pk detailbagan_pk=detailbagan.pk tatami_pk=admintatami.pk %}">
+                                {% endif %}
+                                    <button class="btn btn-success" style="margin-top: 5px;"><i class="align-middle" data-feather="eye"></i> Lihat Score</button>
+                                </a>
+                                </td>
+                                {% endif %}
+							</tr>
+                            {% endfor %}
+						</tbody> 
+					</table>
+				</div>
+			</div>
+		</div>
+        {% endfor %}
+    </div>
+    
+    
+    {% else %}
+
+    <div class="row">
+		<div class="d-flex order-1 order-xxl-1" style="height: 400px; overflow-y: auto;">
+			<div class="card flex-fill">
+				<div class="card-header">
+					<h5 class="card-title mb-0">Daftar <b>Pertandingan</b></h5>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+								<th class="d-none d-xl-table-cell">No</th>
+								<th>Judul</th>
+								<th>MISC</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for pair in pairs_list %}
+							<tr>
+                                
+								<td class="d-none d-xl-table-cell">{{ forloop.counter }}</td>
+                                {% if pair.1 %}
+								<td><b>{{ pair.0 }} VS {{ pair.1 }}</b></td>
+                                {% else %}
+                                <td><b>{{ pair.0 }}</b></td>
+                                {% endif %}
+								<td>
+									<div >
+                                        {% if pair.0.id_detailbagan.dinilai %}
+                                        <a href="{% url 'lihatscore1' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' bagan_pk=bagan.pk detailbagan_pk=pair.0.id_detailbagan.pk tatami_pk=admintatami.pk %}">
+                                            <button class="btn btn-dark" style="margin-top: 5px;"><i class="align-middle" data-feather="eye"></i> 
+                                                Lihat Nilai
+                                            </button>
+                                        </a>
+                                        {% else %}
+                                        <a href="{% url 'controlpanel1' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' bagan_pk=bagan.pk detailbagan_pk=pair.0.id_detailbagan.pk tatami_pk=admintatami.pk %}">
+                                            <button class="btn btn-success" style="margin-top: 5px;"><i class="align-middle" data-feather="edit"></i> 
+                                                Nilai
+                                            </button>
+                                        </a>
+                                        {% endif %}
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+    
+    {% endif %}
+        {% if putra_url in request.path and kategori.judul_kategori == kategori.judul_kategori %}
+        <a href="{% url 'keldetailkategori' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' %}">
+          <button class="btn btn-danger" style="margin-top: 10px">
+            <i class="align-middle me-2" data-feather="arrow-left"></i>Kembali
+          </button>
+        </a>
+        {% elif putri_url in request.path and kategori.judul_kategori == kategori.judul_kategori %}
+        <a href="{% url 'keldetailkategori' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putri' %}">
+          <button class="btn btn-danger" style="margin-top: 10px">
+            <i class="align-middle me-2" data-feather="arrow-left"></i>Kembali
+          </button>
+        </a>
+        {% endif %}
+
+
+        <!-- <script>
+            function openNewTab1(detail_bagan_pk) {
+                var button = event.target;
+                var url = button.getAttribute('data-url');
+                url = url.replace('detailbagan_pk', detail_bagan_pk);
+                window.open(url, "_blank");
+            }
+        </script> -->
+            
+{% endblock %}

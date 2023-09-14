@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Demo</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var csrftoken = '{{ csrf_token }}';  // Get the CSRF token from the template variable
+    
+            $('#create-button').click(function() {
+                var content = $('#note-input').val();
+                $.ajax({
+                    url: '/create_note/',
+                    type: 'POST',
+                    data: {'content': content},
+                    headers: {'X-CSRFToken': csrftoken},  // Include the CSRF token in the headers
+                    success: function(response) {
+                        $('#note-list').prepend('<li>' + response + '</li>');
+                    }
+                });
+            });
+        });
+    </script>    
+</head>
+<body>
+    <h1>Notes</h1>
+    <input type="text" id="note-input">
+    <button id="create-button">Create</button>
+    <ul id="note-list">
+        {% for note in notes %}
+            <li>{{ note.content }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
