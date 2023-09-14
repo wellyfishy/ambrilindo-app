@@ -1,0 +1,310 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        text-transform: uppercase;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1770px;
+      margin: 0 auto;
+      color: white;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .col {
+      flex: 1;
+      padding: 10px;
+    }
+
+    .score {
+    text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+               1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+
+    .forki {
+        background-image: url('https://ifoxsoft.com/wp-content/uploads/2022/11/Logo-FORKI-PNG-%E2%80%93-IfoxSoft.Com_.webp');
+        background-size: cover; /* Adjust as needed */
+        background-repeat: no-repeat; /* Adjust as needed */
+        background-position: center; /* Adjust as needed */
+    }
+}
+</style>
+
+{% url 'keldetailbagan' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' as putra_url %}
+{% url 'keldetailbagan' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putri' as putri_url %}
+<body style="width: 100%; height: 100%; background: #262626">    
+    <!-- Atlet 1 -->
+    <div id="peserta1_warna" style="width: 75%; height: 100%; background: linear-gradient(90deg, #808080 0%, rgba(217, 217, 217, 0) 100%); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25) inset">
+        <div style="display: flex; align-items: center; height: 100%;">
+            <div style="margin-top: 15px; margin-bottom: 15px; margin-left: 50px;">
+                <div style="color: white; font-size: 96px; font-family: Khmer; font-weight: 400; word-wrap: break-word; font-family: Arial, Helvetica, sans-serif;">
+                    <img style="margin-top: 10px;" src="https://ifoxsoft.com/wp-content/uploads/2022/11/Logo-FORKI-PNG-%E2%80%93-IfoxSoft.Com_.webp" alt="Lamp" width="15%" height="100%">
+                    <span id="peserta1_nama">Peserta 1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 100px;">
+        <div class="container">
+            <div class="row">
+            <div class="col">
+                <h1 id="peserta1_perwakilan" style="text-align: left; margin-top: 30px;">-</h1>
+                <h1 id="peserta1_perguruan" style="text-align: left;">-</h1>
+                <h1 style="text-align: left; font-size: 50px; color: #e6fa78;">-</h1>
+            </div>
+            <div class="col">
+                <h1 id="peserta1_score" class="score" style="text-align: right; margin-top: -10px; font-size: 185px; color: #808080; font-family: Arial Black,Arial Bold,Gadget,sans-serif;">00.0</h1>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modes" style="display: none;">
+    <!-- Atlet 2 -->
+    <div id="peserta2_warna" style="width: 75%; height: 100%; background: linear-gradient(90deg, #808080 0%, rgba(217, 217, 217, 0) 100%); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25) inset">
+        <div style="display: flex; align-items: center; height: 100%;">
+            <div style="margin-top: 15px; margin-bottom: 15px; margin-left: 50px;">
+                <div style="color: white; font-size: 96px; font-family: Khmer; font-weight: 400; font-family: Arial, Helvetica, sans-serif; word-wrap: break-word;">
+                    <img stlye="margin-top: 10px;" src="https://ifoxsoft.com/wp-content/uploads/2022/11/Logo-FORKI-PNG-%E2%80%93-IfoxSoft.Com_.webp" alt="Lamp" width="15%" height="100%">
+                    <span id="peserta2_nama">Peserta 2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-bottom: 15px;">
+        <div class="row">
+          <div class="col">
+            <h1 id="peserta2_perwakilan" style="text-align: left; margin-top: 30px;">-</h1>
+            <h1 id="peserta2_perguruan" style="text-align: left;">-</h1>
+            <h1 style="text-align: left; font-size: 50px; color: #e6fa78;">-</h1>
+          </div>
+          <div class="col">
+            <h1 id="peserta2_score" class="score" style="text-align: right; margin-top: -10px; font-size: 185px; color: #808080; font-family: Arial Black,Arial Bold,Gadget,sans-serif;">00.0</h1>
+          </div>
+        </div>
+    </div>
+</div>
+
+    <div style="background-color: #1a1a1a;">
+        <div class="container">
+            <div class="row">
+            <div class="col">
+                <h1 style="text-align: left; margin-top: 10px; font-size: 75px;">TATAMI</h1>
+                <h1 style="margin-left: 115px; text-align: left; font-size: 75px; color: #e6fa78;">1</h1>
+            </div>
+            
+            <div class="col">
+                <h1 class="score" style="text-align: left; margin-left: 75px; margin-top: -15px; font-size: 200px; color: #e6fa78; font-family: Arial Black,Arial Bold,Gadget,sans-serif;">
+                    <span id="minutes">05</span>:<span id="seconds">00</span>
+                </h1>
+                {% comment %} <span id="minutes">05</span>:<span id="seconds">00</span> {% endcomment %}
+            </div>
+            <div class="col">
+                <img style="margin-top: 45px; margin-left: 130px;" src="{% static 'bagan/img/logo.png' %}" alt="Lamp" width="82%" height="60%">
+            </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="timerData"
+        data-event-slug="{{ event.slug }}"
+        data-kategori-slug="{{ kategori.slug }}"
+        data-bagan-pk="{{ bagan.pk }}"
+        data-detailbagan-pk="{{ detailbagan.pk }}"
+        data-tatami-pk="{{ tatami.pk }}"
+        {% if 'putra' in request.path %}
+            data-jenis-kelamin="putra"
+        {% endif %}
+        {% if 'putri' in request.path %}
+            data-jenis-kelamin="putri"
+        {% endif %}
+    ></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var csrftoken = $('[name=csrfmiddlewaretoken]').val();
+        var minutesLabel = $("#minutes");
+        var secondsLabel = $("#seconds");
+        var totalSeconds = 300;
+        var isTimerRunning = false;  // Variable to track the timer running state
+
+        var timerData = $("#timerData");
+        var eventSlug = timerData.data("event-slug");
+        var kategoriSlug = timerData.data("kategori-slug");
+        var baganPk = timerData.data("bagan-pk");
+        var detailbaganPk = timerData.data("detailbagan-pk");
+        var tatamiPk = timerData.data("tatami-pk");
+        var jenisKelamin = timerData.data("jenis-kelamin");
+        var timerStatusUrl = "/kelevent/" + eventSlug + "/kata/" + kategoriSlug + "/";
+        var resetUrl = "{% url 'resettimer2' event_slug=event.slug kategori_slug=kategori.slug jenis_kelamin='putra' bagan_pk=bagan.pk detailbagan_pk=detailbagan.pk tatami_pk=tatami.pk %}";
+
+        if (jenisKelamin === "putra") {
+            timerStatusUrl += "putra/";
+        } else if (jenisKelamin === "putri") {
+            timerStatusUrl += "putri/";
+        }
+        timerStatusUrl += baganPk + "/" + detailbaganPk + "/" + tatamiPk + "/timer_status/";
+
+        // Function to update the timer status using AJAX
+        function updateTimerStatus() {
+            $.ajax({
+                url: timerStatusUrl,
+                method: "GET",
+                success: function(data) {
+                    isTimerRunning = (data.timer_status === "Running");
+                    isTampilkan = (data.tampilkan_status === "Tampilkan");
+                    isReset = (data.timer_reset === "Reset");
+                    isChanged = (data.change === "Change");
+
+                    console.log(data.tampilkan_status)
+
+                    if (data.mode === 'penyisihan') {
+                        var modes = document.getElementById('modes');
+                        modes.style.display = 'none';
+
+                        var peserta1_nama = document.getElementById('peserta1_nama');
+                        peserta1_nama.textContent = data.peserta1_nama;
+                        var peserta1_warna = document.getElementById('peserta1_warna');
+                        var peserta1_score = document.getElementById('peserta1_score');
+                        var peserta1_perwakilan = document.getElementById('peserta1_perwakilan');
+                        peserta1_perwakilan.textContent = data.peserta1_perwakilan;
+                        var peserta1_perguruan = document.getElementById('peserta1_perguruan');
+                        peserta1_perguruan.textContent = data.peserta1_perguruan;
+
+                        if (data.peserta1_warna === 'merah') {
+                            peserta1_warna.style.background = "linear-gradient(90deg, #FF4949 0%, rgba(217, 217, 217, 0) 100%) ";
+                            peserta1_score.style.color = "#FF4949";
+                        } else {
+                            peserta1_warna.style.background = "linear-gradient(90deg, #2c566e 0%, rgba(217, 217, 217, 0) 100%) ";
+                            peserta1_score.style.color = "#2c566e";
+                        }
+                    } else {
+                        var modes = document.getElementById('modes');
+                        modes.style.display = 'inline';
+
+                        var peserta1_nama = document.getElementById('peserta1_nama');
+                        peserta1_nama.textContent = data.peserta1_nama;
+                        var peserta1_warna = document.getElementById('peserta1_warna');
+                        peserta1_warna.style.background = "linear-gradient(90deg, #FF4949 0%, rgba(217, 217, 217, 0) 100%) ";
+                        var peserta1_score = document.getElementById('peserta1_score');
+                        peserta1_score.style.color = "#FF4949";
+                        var peserta1_perwakilan = document.getElementById('peserta1_perwakilan');
+                        peserta1_perwakilan.textContent = data.peserta1_perwakilan;
+                        var peserta1_perguruan = document.getElementById('peserta1_perguruan');
+                        peserta1_perguruan.textContent = data.peserta1_perguruan;
+                        
+                        var peserta2_nama = document.getElementById('peserta2_nama');
+                        peserta2_nama.textContent = data.peserta2_nama;
+                        var peserta2_warna = document.getElementById('peserta2_warna');
+                        peserta2_warna.style.background = "linear-gradient(90deg, #2c566e 0%, rgba(217, 217, 217, 0) 100%) ";
+                        var peserta2_score = document.getElementById('peserta2_score');
+                        peserta2_score.style.color = "#2c566e";
+                        var peserta2_perwakilan = document.getElementById('peserta2_perwakilan');
+                        peserta2_perwakilan.textContent = data.peserta2_perwakilan;
+                        var peserta2_perguruan = document.getElementById('peserta2_perguruan');
+                        peserta2_perguruan.textContent = data.peserta2_perguruan;
+                    }
+
+                    if (data.timer_reset === "Reset") {
+                        totalSeconds = 300
+
+                        console.log(data.timer_reset)
+                        var minutes = Math.floor(totalSeconds / 60);
+                        var seconds = totalSeconds % 60;
+                        minutesLabel.text(pad(minutes));
+                        secondsLabel.text(pad(seconds));
+
+                        $.ajax({
+                            url: resetUrl,
+                            method: "POST",
+                            headers: { "X-CSRFToken": csrftoken },  // Pass the CSRF token in the headers
+                            success: function(data) {
+                                console.log("Timer reset successfully");
+                            }
+                        });
+
+                    }
+
+                    if (data.tampilkan_status === "Tampilkan") {
+                        if (data.mode === 'penyisihan') {
+                            const validate1 = document.getElementById('peserta1_score');
+                            if (validate1 !== null) {
+                                if (data.peserta1_warna === 'merah') {
+                                    validate1.textContent = data.totalscore1;
+                                } else {
+                                    validate1.textContent = data.totalscore2;
+                                }
+                            }
+                        } else {
+                            const validate1 = document.getElementById('peserta1_score');
+                            const validate2 = document.getElementById('peserta2_score');
+
+                            validate1.textContent = data.totalscore1;
+                            validate2.textContent = data.totalscore2;
+                        }
+                    } else {
+                        const validate1 = document.getElementById("peserta1_score");
+                        const validate2 = document.getElementById('peserta2_score');
+                        
+                        validate1.textContent = "00.0";
+                        
+                        if (validate2 !== null) {
+                            validate2.textContent = "00.0";
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to update the countup timer display
+        function updateCountupTimer() {
+            if (isTimerRunning) {
+                totalSeconds--;
+                localStorage.setItem('totalSeconds', totalSeconds);  // Store the totalSeconds value in local storage
+                var minutes = Math.floor(totalSeconds / 60);
+                var seconds = totalSeconds % 60;
+                minutesLabel.text(pad(minutes));
+                secondsLabel.text(pad(seconds));
+                
+            }
+        }
+
+
+        // Call the updateTimerStatus function every 1 second
+        setInterval(updateTimerStatus, 1000);
+
+        // Call the updateCountupTimer function every 1 second
+        setInterval(updateCountupTimer, 1000);
+   });
+
+   function pad(val) {
+       var valString = val.toString();
+       if (valString.length < 2) {
+           return "0" + valString;
+       } else {
+           return valString;
+       }
+   }
+</script>
+
+</body>
+
+</html>
+
+

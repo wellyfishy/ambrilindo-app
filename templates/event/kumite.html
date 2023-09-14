@@ -1,0 +1,31 @@
+{% extends 'event/eventbase.html' %} {% load static %}
+
+{% block title %}
+    Kumite
+{% endblock %}
+
+{% block content %}
+    <h1>
+        Kumite Home
+    </h1>
+    <button id="openWindowButton" class="btn btn-primary">Click Disini Untuk ke Control Panel Kumite</button>
+
+    <script>
+        // Function to open a new window when the button is clicked
+        document.getElementById("openWindowButton").addEventListener("click", function() {
+            // Specify the URL and window properties
+            var url = "{% url 'kumite-cp' slug=event.slug %}"; // Replace with your desired URL
+            window.open(url)
+            // var windowName = "NewWindow";
+            // var windowFeatures = "width=800,height=600";
+
+            // Open the new window
+            // var newWindow = window.open(url, windowName, windowFeatures);
+
+            // Focus on the new window (optional)
+            // if (newWindow) {
+            //     newWindow.focus();
+            // }
+        });
+    </script>
+{% endblock %}

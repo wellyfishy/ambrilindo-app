@@ -1,0 +1,95 @@
+{% extends 'event/eventbase.html' %} {% load static %}
+
+{% block title %}
+    Test
+{% endblock title %}
+
+{% block content %}
+<h1 class="h3 mb-3"><strong>Dashboard Tatami</strong> {{ event.judul_event }}</h1>
+<button class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModalCenter"><i class="align-middle me-2" data-feather="user-plus"></i>Tambah Tatami</button>
+<br>
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
+    <div class="modal-dialog modal-md  modal-dialog-centered" role="document">
+        <div class="modal-content rounded-0">
+            <div class="modal-body py-0">
+
+            
+                <div class="d-flex main-content">
+                    <div class="content-text p-4">
+                        <h3>Tambah Tatami</h3>
+                        <p>Apakah anda yakin ingin menambah Tatami?</p>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-group d-flex align-items-center">
+                                <input name="submit_button" type="submit" value="tambah" class="btn btn-primary mr-3 px-5">
+                                {% comment %} <a href="">
+                                    <button type="button" class="btn btn-success mr-3 px-5"><i class="align-middle me-2" data-feather="plus">
+                                        </i>Tambah
+                                    </button>
+                                </a> {% endcomment %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %} Demo Footer {% endcomment %}
+
+<div class="row">
+    <div class="d-flex order-1 order-xxl-1">
+        <div class="card flex-fill">
+            <div class="card-header">
+                <h5 class="card-title mb-0">List <b>Tatami</b></h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover my-0">
+                    <thead>
+                        <tr>
+                            <th class="d-none d-xl-table-cell">No</th>
+                            <th>Nama</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>MISC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tatami in tatamis %}
+                        <tr>
+                            <td class="d-none d-xl-table-cell">{{ forloop.counter }}</td>
+                            <td><b>{{ tatami }}</b></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>
+                                
+                                    <a href="{% url 'keldetailtatamiedit' slug=event.slug tatami_pk=tatami.pk %}">
+                                        <button class="btn btn-primary btn-sm" style=""><i class="align-middle" data-feather="edit"></i></button>
+                                    </a>
+                                <div style="display: inline-block;">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="tatami" value="{{ tatami.pk }}">
+                                        <button name="submit_button" value="hapus" class="btn btn-danger btn-sm" style=""><i class="align-middle" data-feather="trash-2"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

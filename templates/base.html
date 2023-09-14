@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{% endblock %} - Ambrilindo </title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="{% static 'bagan/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'bagan/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="{% static 'bagan/lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+  <!-- Libraries CSS Files -->
+  <link href="{% static 'bagan/lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'bagan/lib/animate/animate.min.css" rel="stylesheet' %}">
+  <link href="{% static 'bagan/lib/venobox/venobox.css" rel="stylesheet' %}">
+  <link href="{% static 'bagan/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="{% static 'bagan/css/style.css'%}" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- =======================================================
+    Theme Name: TheEvent
+    Theme URL: https://bootstrapmade.com/theevent-conference-event-bootstrap-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+</head>
+
+<body>
+    <button type="button" id="mobile-nav-toggle"><i class="fa fa-bars"></i></button>
+    <!--==========================
+      Header
+    ============================-->
+    <header id="header" {% if request.path == "/kelevent/" or request.path == "/event/" %} class="header-fixed" {% endif %}>
+        <div class="container">
+    
+            <div id="logo" class="pull-left">
+                <!-- Uncomment below if you prefer to use a text logo -->
+                <!-- <h1><a href="#main">C<span>o</span>nf</a></h1>-->
+                <a href="#intro" class="scrollto"><img src="{% static 'bagan/img/logo.png' %}" alt="" title=""></a>
+            </div>
+    
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                    {% comment %} class="menu-active" {% endcomment %}                  
+                    <li {% if request.path == "/" %} class="menu-active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
+                    <li {% if request.path == "/event/" %} class="menu-active" {% endif %}><a href="{% url 'listevent' %}">Event</a></li>
+                    <li><a href="#about">Tentang Kami</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="buy-tickets"><a href="{% url 'kelevent' %}">Kelola Event</a></li>
+                    <li class="buy-tickets"><a href="" onclick="confirmLogout()">Logout</a></li>
+                    {% else %}
+                    <li class="buy-tickets"><a href="{% url 'login' %}" >Login</a></li>
+    
+                    {% endif %}
+                </ul>
+            </nav><!-- #nav-menu-container -->
+        </div>
+    </header><!-- #header -->
+
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- Login and Register Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <!-- Modal header -->
+                <div class="modal-header d-flex" style="background-color: #f82249;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <!-- Modal body -->
+                <div class="modal-body custom-modal" style="background-color: #101522; color: #ffffff;">
+                    <div id="loginForm">
+                        <h5 style="color: #ffffff;"><b>Login Form</b></h5>
+                        <form method="POST" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="registerName">Username</label>
+                                <input type="text" name="username" class="form-control" id="registerName" placeholder="Username..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <input type="password" name="password" class="form-control" id="loginPassword" placeholder="Password..." required>
+                            </div>
+                            <button style="" type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                    <div id="registerForm" style="display: none;">
+                        <h5 style="color: #ffffff;"><b>Register Form</b></h5>
+                        <form>
+                            <div class="form-group">
+                                <label for="registerEmail">Email</label>
+                                <input type="email" class="form-control" id="registerEmail" placeholder="Email...">
+                            </div>
+                            <div class="form-group">
+                                <label for="registerName">Username</label>
+                                <input type="text" class="form-control" id="registerName" placeholder="Username...">
+                            </div>
+                            <div class="form-group">
+                                <label for="registerPassword">Password</label>
+                                <input type="password" class="form-control" id="registerPassword" placeholder="Password...">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="background-color: #f82249">Register</button>
+                        </form>
+                    </div>
+                <br>
+                    <div class="modal-footer">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active" id="loginButton">
+                                <input type="radio" name="options" id="loginButton" autocomplete="off" checked> Login
+                            </label>
+                            <label class="btn btn-secondary" id="registerButton">
+                                <input type="radio" name="options" id="registerButton" autocomplete="off"> Register
+                            </label>     
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Login and Register Modal -->
+
+    <!--==========================
+      Footer
+    ============================-->
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <img src="{% static 'bagan/img/logo.png' %}" alt="Ambrilindo">
+                        <p>
+                            Ambrilindo adalah sebuah perusahaan software house milik Welly Setia Rahman yang beranggotakan satu orang yaitu Welly Setia Rahman. Perusahaan ini telah berdiri sejak 2023.
+                        </p>
+                    </div>
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                        <strong>Phone:</strong> +62849533481<br>
+                        <strong>Email:</strong> ambrilindo@gmail.com<br>
+                        </p>
+                        {% comment %} <div class="social-links">
+                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                            <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong>ambrilindo</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!--
+                All the links in the footer should remain intact.
+                You can delete the links only if you purchased the pro version.
+                Licensing information: https://bootstrapmade.com/license/
+                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=TheEvent
+                -->
+                {% comment %} Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> {% endcomment %}
+            </div>
+        </div>
+    </footer><!-- #footer -->
+
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="{% static 'bagan/lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/jquery/jquery-migrate.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/superfish/hoverIntent.js' %}"></script>
+    <script src="{% static 'bagan/lib/superfish/superfish.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/venobox/venobox.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    
+    <!-- Contact Form JavaScript File -->
+    <script src="{% static 'bagan/contactform/contactform.js' %}"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="{% static 'bagan/js/main.js' %}"></script>
+
+    <script>
+        function confirmLogout() {
+            if (confirm("Are you sure you want to logout?")) {
+                window.location.href = "{% url 'logout' %}";
+            }
+        }
+    </script>
+
+      <!-- Add JavaScript code -->
+  <script>
+    $(document).ready(function() {
+      // Register button click event
+      $('#registerButton').click(function() {
+        $('#loginForm').hide();
+        $('#registerForm').show();
+      });
+      // Login button click event
+      $('#loginButton').click(function() {
+        $('#registerForm').hide();
+        $('#loginForm').show();
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{% endblock %} - Ambrilindo </title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="{% static 'bagan/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'bagan/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="{% static 'bagan/lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="{% static 'bagan/lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'bagan/lib/animate/animate.min.css" rel="stylesheet' %}">
+  <link href="{% static 'bagan/lib/venobox/venobox.css" rel="stylesheet' %}">
+  <link href="{% static 'bagan/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="{% static 'bagan/css/style.css'%}" rel="stylesheet">
+
+  <!-- =======================================================
+    Theme Name: TheEvent
+    Theme URL: https://bootstrapmade.com/theevent-conference-event-bootstrap-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+    <style>
+    .custom-slider {
+        margin-bottom: 30px;
+        position: relative;
+        left: 50%;
+        -ms-transform: translate(-50%);
+        transform: translate(-50%);
+        accent-color: red;
+        width: 350px;
+        height: 50px; /* Adjust the height as needed */
+    }
+
+    .custom-slider::-webkit-slider-thumb {
+        width: 50px; /* Adjust the width of the thumb */
+        height: 50px; /* Adjust the height of the thumb */
+        background-color: red; /* Change the background color */
+        border: 2px solid white; /* Add a border */
+        border-radius: 50%; /* Make it round */
+        cursor: pointer; /* Change the cursor on hover */
+    }
+
+    .custom-slider1 {
+        margin-bottom: 30px;
+        position: relative;
+        left: 50%;
+        -ms-transform: translate(-50%);
+        transform: translate(-50%);
+        accent-color: blue;
+        width: 350px;
+        height: 50px; /* Adjust the height as needed */
+    }
+
+    .custom-slider1::-webkit-slider-thumb {
+        width: 50px; /* Adjust the width of the thumb */
+        height: 50px; /* Adjust the height of the thumb */
+        background-color: blue; /* Change the background color */
+        border: 2px solid white; /* Add a border */
+        border-radius: 50%; /* Make it round */
+        cursor: pointer; /* Change the cursor on hover */
+    }
+    
+</style>
+  
+</head>
+
+<body>
+    <!--==========================
+      Header
+    ============================-->
+    <header id="header" class="header-fixed">
+        <div class="container">
+    
+            <div id="logo" class="pull-left">
+                <!-- Uncomment below if you prefer to use a text logo -->
+                <!-- <h1><a href="#main">C<span>o</span>nf</a></h1>-->
+                <a href="#intro" class="scrollto"><img src="{% static 'bagan/img/logo.png' %}" alt="" title=""></a>
+            </div>
+    
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                    {% comment %} class="menu-active" {% endcomment %}                  
+                    <li {% if request.path == "/" %} class="menu-active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="#about">Event</a></li>
+                    <li><a href="#about">Tentang Kami</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="buy-tickets"><a href="{% url 'kelevent' %}">Kelola Event</a></li>
+                    <li class="buy-tickets"><a href="" onclick="confirmLogout()">Logout</a></li>
+                    {% else %}
+                    <li class="buy-tickets"><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </nav><!-- #nav-menu-container -->
+        </div>
+    </header><!-- #header -->
+
+    {% block content %}
+    
+    {% endblock %}
+
+    <!--==========================
+      Footer
+    ============================-->
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <img src="{% static 'bagan/img/logo.png' %}" alt="Ambrilindo">
+                    </div>
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                        <strong>Phone:</strong> +62849533481<br>
+                        <strong>Email:</strong> ambrilindo@gmail.com<br>
+                        </p>
+                        {% comment %} <div class="social-links">
+                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                            <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong>ambrilindo</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!--
+                All the links in the footer should remain intact.
+                You can delete the links only if you purchased the pro version.
+                Licensing information: https://bootstrapmade.com/license/
+                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=TheEvent
+                -->
+                {% comment %} Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> {% endcomment %}
+            </div>
+        </div>
+    </footer><!-- #footer -->
+
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="{% static 'bagan/lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/jquery/jquery-migrate.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/superfish/hoverIntent.js' %}"></script>
+    <script src="{% static 'bagan/lib/superfish/superfish.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/venobox/venobox.min.js' %}"></script>
+    <script src="{% static 'bagan/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <!-- Contact Form JavaScript File -->
+    <script src="{% static 'bagan/contactform/contactform.js' %}"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="{% static 'bagan/js/main.js' %}"></script>
+
+    <script>
+        function confirmLogout() {
+            if (confirm("Are you sure you want to logout?")) {
+                window.location.href = "{% url 'logout' %}";
+            }
+        }
+    </script>
+
+</body>
+</html>

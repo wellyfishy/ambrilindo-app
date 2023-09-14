@@ -1,0 +1,225 @@
+{% extends 'event/eventbase.html' %} {% load static %}
+
+{% block title %}
+    {{ event.judul_event }} | Atlet
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+    <h1 class="h3 mb-3"><strong>Dashboard Atlet</strong> {{ event.judul_event }}</h1>
+    <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModalCenter"><i class="align-middle me-2" data-feather="user-plus"></i>Tambah Manual</button>
+    <br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row mb-2">
+            <div class="col-12 col-md-3 col-xxl-6 d-flex order-1 order-xxl-1">
+                <input type="file" class="form-control" name="file" accept=".xlsx" required/>  
+            </div>
+            <div class="col-12 col-md-6 col-xxl-6 d-flex order-2 order-xxl-1">
+                <button type="submit" name="submit_button" value="importatlet" class="btn btn-success"><i class="align-middle me-2" data-feather="file-text"></i></i>Import</button>
+            </div>
+        </div>
+    </form>
+	<div class="mb-2">
+		<a href="{% url 'keldetailatlet' slug=event.slug %}"><button type="button" class="btn {% if request.path == '/kelevent/'|add:event.slug|add:'/atlet/' %}btn-dark {% else %}btn-light btn-outline-dark {% endif %}">Semua</button>
+		<a href="{% url 'kelatletjk' slug=event.slug jenis_kelamin='putra' %}"><button type="button" class="btn {% if request.path == '/kelevent/'|add:event.slug|add:'/atlet/putra/' %}btn-dark {% else %}btn-light btn-outline-dark {% endif %}">Putra</button>
+		<a href="{% url 'kelatletjk' slug=event.slug jenis_kelamin='putri' %}"><button type="button" class="btn {% if request.path == '/kelevent/'|add:event.slug|add:'/atlet/putri/' %}btn-dark {% else %}btn-light btn-outline-dark {% endif %}">Putri</button></a>
+	</div>
+  
+      <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
+        <div class="modal-dialog modal-md  modal-dialog-centered" role="document">
+            <div class="modal-content rounded-0">
+                <div class="modal-body py-0">
+    
+                
+                    <div class="d-flex main-content">
+                        <div class="content-text p-4">
+                            <h3>Tambah Atlet</h3>
+                            {% comment %} <p>All their equipment and instruments are alive. The sky was cloudless and of a deep dark blue.</p> {% endcomment %}
+            
+                            <form method="POST">
+								{% csrf_token %}
+                                <div class="form-group">
+                                    <label for="name">Nama</label>
+                                    <input type="text" class="form-control" id="text" name="nama_atlet" placeholder="Nama..." required>
+                                </div>
+								<div class="form-group">
+                                    <label for="jenis_kelamin">Jenis Kelamin</label>
+                                    <select class="form-control" name="jenis_kelamin">
+										<option>
+											-
+										</option>
+										<option>
+											Putra
+										</option>
+										<option>
+											Putri
+										</option>
+									</select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="perguruan">Perguruan</label>
+                                    <input type="text" class="form-control" id="text" name="perguruan" placeholder="Perguruan..." required>
+                                </div>
+								<div class="form-group">
+                                    <label for="perwakilan">Perwakilan</label>
+                                    <input type="text" class="form-control" id="text" name="perwakilan" placeholder="Perwakilan..." required>
+                                </div>
+								<div class="form-group">
+                                    <label for="nomor_tanding">Nomor Tanding</label>
+                                    <select class="form-control" name="nomor_tanding">
+										<option>
+											-
+										</option>
+										{% for kategori in bagan_kategori %}
+										<option>
+											{{ kategori }}
+										</option>
+										{% endfor %}
+									</select>
+                                </div>
+								<div class="form-group">
+                                    <label for="tipe">Tipe</label>
+                                    <select class="form-control" name="tipe">
+										<option>
+											-
+										</option>
+										<option>
+											Perorangan
+										</option>
+										<option>
+											Beregu
+										</option>
+									</select>
+                                </div>
+                                <div class="form-group d-flex align-items-center">
+									<button type="submit" name="submit_button" value="tambahatlet" class="btn btn-success">
+										<i class="align-middle me-2" data-feather="user-plus"></i>
+										Tambah
+									</button>
+
+                                	{% comment %} <input type="submit" name="submit_button" value="tambahatlet" class="btn btn-primary mr-3 px-5"> {% endcomment %}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} Demo Footer {% endcomment %}
+
+    <div class="row">
+		{% if jk == 'putri' %}
+		{% else %}
+		<div class="d-flex order-1 order-xxl-1" style="height: 400px; overflow: auto;">
+			<div class="card flex-fill">
+				<div class="card-header">
+					<h5 class="card-title mb-0">Atlet <b>Putra</b></h5>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+								<th class="d-none d-xl-table-cell">No</th>
+								<th>Nama</th>
+								<th>Perguruan</th>
+								<th>Perwakilan</th>
+								<th>Nomor Tanding</th>
+								<th>MISC</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for putra in atlet_putra %}
+							<tr>
+								<td class="d-none d-xl-table-cell">{{ forloop.counter }}</td>
+								<td><b>{{ putra.nama_atlet }}</b></td>
+								<td>{{ putra.perguruan }}</td>
+								<td>{{ putra.perwakilan }}</td>
+								<td><b>{{ putra.nomor_tanding }}</b></td>
+								<td>
+									<div style="display: inline-block;">
+										<a href="{% url 'atletedit' slug=event.slug atlet_pk=putra.pk %}">
+											<button class="btn btn-primary btn-sm" style="">
+												<i class="align-middle" data-feather="edit"></i>
+											</button>
+										</a>
+									</div>
+									<div style="display: inline-block;">
+										<form method="POST">
+											{% csrf_token %}
+											<input type="hidden" name="atlet_pk" value="{{ putra.pk }}"></input>
+											<button type="submit" name="submit_button" value="hapusatlet" class="btn btn-danger btn-sm" style=""><i class="align-middle" data-feather="trash-2"></i></button>
+										</form>
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		{% if jk == 'putra' %}
+		{% else %}
+        <div class="d-flex order-1 order-xxl-1" style="height: 400px; overflow: auto;">
+			<div class="card flex-fill">
+				<div class="card-header">
+					<h5 class="card-title mb-0">Atlet <b>Putri</b></h5>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+								<th class="d-none d-xl-table-cell">No</th>
+								<th>Nama</th>
+								<th>Perguruan</th>
+								<th>Perwakilan</th>
+								<th>Nomor Tanding</th>
+								<th>MISC</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for putri in atlet_putri %}
+							<tr>
+								<td class="d-none d-xl-table-cell">{{ forloop.counter }}</td>
+								<td><b>{{ putri.nama_atlet }}</b></td>
+								<td>{{ putri.perguruan }}</td>
+								<td>{{ putri.perwakilan }}</td>
+								<td><b>{{ putri.nomor_tanding }}</b></td>
+								<td>
+									<div style="display: inline-block;">
+										<a href="{% url 'atletedit' slug=event.slug atlet_pk=putri.pk %}">
+											<button class="btn btn-primary btn-sm" style="">
+												<i class="align-middle" data-feather="edit"></i>
+											</button>
+										</a>
+									</div>
+									<div style="display: inline-block;">
+										<form method="POST">
+											{% csrf_token %}
+											<input type="hidden" name="atlet_pk" value="{{ putri.pk }}"></input>
+											<button type="submit" name="submit_button" value="hapusatlet" class="btn btn-danger btn-sm" style=""><i class="align-middle" data-feather="trash-2"></i></button>
+										</form>
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	</div>
+{% endblock %}

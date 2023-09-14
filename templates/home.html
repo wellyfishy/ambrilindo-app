@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% load static %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+
+<!--==========================
+    Intro Section
+============================-->
+<section id="intro">
+    <div class="intro-container wow fadeIn">
+        {% if user.is_authenticated %}
+            <h1 class="mb-4 pb-0">Selamat Datang,<br><span> {{ user.username }}</span></h1>
+        {% else %}
+            <h1 class="mb-4 pb-0">AMBRILINDO<br><span>KARATE</span> APPLICATIONS</h1>
+            <p class="mb-4 pb-0">EST. 2023</p>
+            <a href="#about" class="about-btn scrollto">Tentang Kami</a>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'staticbase.html' %} {% load static %}
+
+{% block title %}
+    {{ event.judul_event }}
+{% endblock %}
+
+{% block content %}
+<main id="main" class="main-page">
+
+    <!--==========================
+      Hotels Section
+    ============================-->
+    <section id="hotels" class="wow fadeIn">
+
+        <div class="container">
+            <div class="section-header">
+                <h2>{{ event.judul_event }}</h2>
+            </div>
+
+            <div class="row">
+                    <div class="d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-header">
+
+                                <h5 class="card-title mb-0">Semua Bagan Kata</h5>
+                            </div>
+                            <table class="table table-hover my-0">
+                                <thead>
+                                    <tr>
+                                        <th>Judul</th>
+                                        <th class="d-none d-xl-table-cell">-</th>
+                                        <th class="d-none d-xl-table-cell">-</th>
+                                        <th>Status</th>
+                                        <th class="d-none d-md-table-cell">-</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for event in event.id_bagan.all %}
+                                    <tr>
+                                        <td>{{ event.judul_bagan }}</td>
+                                        <td class="d-none d-xl-table-cell">-</td>
+                                        <td class="d-none d-xl-table-cell">-</td>
+                                        <td><span class="badge {% if event.status == 'S' %}bg-success{% else %}bg-danger{% endif %}">{{ event.get_status_display }}</span></td>
+                                        <td class="d-none d-md-table-cell">-</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+    
+            </div>
+        </div>
+  
+      </section>
+    </main>
+{% endblock %}
